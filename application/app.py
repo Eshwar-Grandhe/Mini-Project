@@ -1,24 +1,26 @@
 from flask import Flask, render_template, request
-from keras.models import load_model
-from tensorflow.keras.initializers import glorot_uniform
-from keras.preprocessing import image
-from PIL import Image
-import numpy as np
 import tensorflow as tf
 from tensorflow import keras
+from keras.models import load_model
+from tensorflow.keras.initializers import glorot_uniform
+from PIL import Image
+import numpy as np
 
-config = tf.ConfigProto(
-    device_count={'GPU': 1},
-    intra_op_parallelism_threads=1,
-    allow_soft_placement=True
+
+#run the application using tensorflow version 1.15.0
+
+config = tf.compat.v1.ConfigProto(
+   device_count={'GPU': 1},
+   intra_op_parallelism_threads=1,
+   allow_soft_placement=True
 )
 
 config.gpu_options.allow_growth = True
 config.gpu_options.per_process_gpu_memory_fraction = 0.6
 
-session = tf.Session(config=config)
+session = tf.compat.v1.Session(config=config)
 
-keras.backend.set_session(session)
+tf.compat.v1.keras.backend.set_session(session)
 
 
 app = Flask(__name__)
